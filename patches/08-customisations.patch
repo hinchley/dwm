@@ -1,0 +1,97 @@
+diff --git a/config.def.h b/config.def.h
+index e9b3337..32f9f8e 100644
+--- a/config.def.h
++++ b/config.def.h
+@@ -1,23 +1,26 @@
+ /* See LICENSE file for copyright and license details. */
++#include <X11/XF86keysym.h>
+ 
+ /* appearance */
+-static const unsigned int borderpx  = 1;        /* border pixel of windows */
++static const unsigned int borderpx  = 3;        /* border pixel of windows */
+ static const unsigned int gappx     = 10;       /* gaps between windows */
+ static const unsigned int snap      = 32;       /* snap pixel */
+ static const int swallowfloating    = 0;        /* 1 means swallow floating windows by default */
+ static const int showbar            = 1;        /* 0 means no bar */
+ static const int topbar             = 1;        /* 0 means bottom bar */
+-static const char *fonts[]          = { "monospace:size=10" };
+-static const char dmenufont[]       = "monospace:size=10";
+-static const char col_gray1[]       = "#222222";
+-static const char col_gray2[]       = "#444444";
+-static const char col_gray3[]       = "#bbbbbb";
+-static const char col_gray4[]       = "#eeeeee";
+-static const char col_cyan[]        = "#005577";
++static const char *fonts[]          = { "FiraCode Nerd Font Mono:size=12" };
++static const char dmenufont[]       = "FiraCode Nerd Font Mono:size=12";
++static const char blue[]            = "#8aadf4";
++static const char base[]            = "#24273a";
++static const char text[]            = "#cad3f5";
++static const char overlay0[]        = "#939ab7";
++static const char surface0[]        = "#363a4f";
++static const char surface1[]        = "#494d64";
++static const char subtext1[]        = "#b8c0e0";
+ static const char *colors[][3]      = {
+ 	/*               fg         bg         border   */
+-	[SchemeNorm] = { col_gray3, col_gray1, col_gray2 },
+-	[SchemeSel]  = { col_gray4, col_cyan,  col_cyan  },
++	[SchemeNorm] = { text,      base,      surface1 },
++	[SchemeSel]  = { blue,      surface1,  overlay0 },
+ };
+ 
+ /* tagging */
+@@ -29,16 +32,16 @@ static const Rule rules[] = {
+ 	 *	WM_NAME(STRING) = title
+ 	 */
+ 	/* class     instance  title           tags mask  isfloating  isterminal  noswallow  monitor */
+-	{ "Gimp",    NULL,     NULL,           0,         1,          0,           0,        -1 },
+-	{ "Firefox", NULL,     NULL,           1 << 8,    0,          0,          -1,        -1 },
++	{ "Firefox", NULL,     NULL,           0,         0,          0,          -1,        -1 },
+ 	{ "st",      NULL,     NULL,           0,         0,          1,           0,        -1 },
+ 	{ NULL,      NULL,     "Event Tester", 0,         0,          0,           1,        -1 }, /* xev */
++	{ "floater", NULL,     NULL,           0,         1,          1,           1,        -1 },
+ };
+ 
+ /* layout(s) */
+-static const float mfact     = 0.55; /* factor of master area size [0.05..0.95] */
++static const float mfact     = 0.50; /* factor of master area size [0.05..0.95] */
+ static const int nmaster     = 1;    /* number of clients in master area */
+-static const int resizehints = 1;    /* 1 means respect size hints in tiled resizals */
++static const int resizehints = 0;    /* 1 means respect size hints in tiled resizals */
+ static const int lockfullscreen = 1; /* 1 will force focus on the fullscreen window */
+ 
+ static const Layout layouts[] = {
+@@ -63,9 +66,14 @@ static const Layout layouts[] = {
+ 
+ /* commands */
+ static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() */
+-static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont, "-nb", col_gray1, "-nf", col_gray3, "-sb", col_cyan, "-sf", col_gray4, NULL };
++static const char *dmenucmd[] = { "dmenu_run", "-fn", dmenufont, "-nb", base, "-nf", subtext1, "-sb", blue, "-sf", surface0, NULL };
+ static const char *termcmd[]  = { "st", NULL };
+ 
++/* volume */
++static const char *upvol[]   = { "/usr/bin/amixer", "set", "Master", "5%+", NULL };
++static const char *downvol[] = { "/usr/bin/amixer", "set", "Master", "5%-", NULL };
++static const char *mutevol[] = { "/usr/bin/amixer", "set", "Master", "toggle", NULL };
++
+ static const Key keys[] = {
+ 	/* modifier                     key        function        argument */
+ 	{ MODKEY,                       XK_p,      spawn,          {.v = dmenucmd } },
+@@ -83,7 +91,7 @@ static const Key keys[] = {
+ 	{ MODKEY,                       XK_l,      setmfact,       {.f = +0.05} },
+ 	{ MODKEY,                       XK_Return, zoom,           {0} },
+ 	{ MODKEY,                       XK_Tab,    view,           {0} },
+-	{ MODKEY|ShiftMask,             XK_c,      killclient,     {0} },
++	{ MODKEY,                       XK_c,      killclient,     {0} },
+ 	{ MODKEY,                       XK_t,      setlayout,      {.v = &layouts[0]} },
+ 	{ MODKEY,                       XK_f,      setlayout,      {.v = &layouts[1]} },
+ 	{ MODKEY,                       XK_m,      setlayout,      {.v = &layouts[2]} },
+@@ -110,6 +118,9 @@ static const Key keys[] = {
+ 	TAGKEYS(                        XK_8,                      7)
+ 	TAGKEYS(                        XK_9,                      8)
+ 	{ MODKEY|ShiftMask,             XK_q,      quit,           {0} },
++	{ 0,                            XF86XK_AudioLowerVolume, spawn, {.v = downvol } },
++	{ 0,                            XF86XK_AudioMute,        spawn, {.v = mutevol } },
++	{ 0,                            XF86XK_AudioRaiseVolume, spawn, {.v = upvol } },
+ };
+ 
+ /* button definitions */

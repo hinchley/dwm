@@ -1,0 +1,94 @@
+diff --git a/config.def.h b/config.def.h
+index 473916f..83bf9b1 100644
+--- a/config.def.h
++++ b/config.def.h
+@@ -43,6 +43,8 @@ static const Layout layouts[] = {
+ 	{ "[]=",      tile },    /* first entry is default */
+ 	{ "><>",      NULL },    /* no layout function means floating behavior */
+ 	{ "[M]",      monocle },
++	{ "TTT",      bstack },
++	{ "===",      bstackhoriz },
+ };
+ 
+ /* key definitions */
+@@ -78,6 +80,8 @@ static const Key keys[] = {
+ 	{ MODKEY,                       XK_t,      setlayout,      {.v = &layouts[0]} },
+ 	{ MODKEY,                       XK_f,      setlayout,      {.v = &layouts[1]} },
+ 	{ MODKEY,                       XK_m,      setlayout,      {.v = &layouts[2]} },
++	{ MODKEY,                       XK_u,      setlayout,      {.v = &layouts[3]} },
++	{ MODKEY,                       XK_o,      setlayout,      {.v = &layouts[4]} },
+ 	{ MODKEY,                       XK_space,  setlayout,      {0} },
+ 	{ MODKEY|ShiftMask,             XK_space,  togglefloating, {0} },
+ 	{ MODKEY,                       XK_0,      view,           {.ui = ~0 } },
+diff --git a/dwm.c b/dwm.c
+index 22388ec..19b0eda 100644
+--- a/dwm.c
++++ b/dwm.c
+@@ -235,6 +235,8 @@ static int xerror(Display *dpy, XErrorEvent *ee);
+ static int xerrordummy(Display *dpy, XErrorEvent *ee);
+ static int xerrorstart(Display *dpy, XErrorEvent *ee);
+ static void zoom(const Arg *arg);
++static void bstack(Monitor *m);
++static void bstackhoriz(Monitor *m);
+ 
+ /* variables */
+ static const char broken[] = "broken";
+@@ -2181,3 +2183,58 @@ main(int argc, char *argv[])
+ 	XCloseDisplay(dpy);
+ 	return EXIT_SUCCESS;
+ }
++
++static void
++bstack(Monitor *m)
++{
++	unsigned int i, n, w, mh, mx, tx;
++	Client *c;
++
++	for (n = 0, c = nexttiled(m->clients); c; c = nexttiled(c->next), n++);
++	if (n == 0)
++		return;
++
++	if (n > m->nmaster)
++		mh = m->nmaster ? m->wh * m->mfact : 0;
++	else
++		mh = m->wh - m->gappx;
++	for (i = 0, mx = tx = m->gappx, c = nexttiled(m->clients); c; c = nexttiled(c->next), i++)
++		if (i < m->nmaster) {
++			w = (m->ww - mx) / (MIN(n, m->nmaster) - i) - m->gappx;
++			resize(c, m->wx + mx, m->wy + m->gappx, w - (2*c->bw), mh - (2*c->bw) - m->gappx, 0);
++			if (mx + WIDTH(c) + m->gappx < m->ww)
++				mx += WIDTH(c) + m->gappx;
++		} else {
++			w = (m->ww - tx) / (n - i);
++			resize(c, tx, m->wy + m->gappx + mh, w - m->gappx - (2*c->bw), m->wh - mh - 2*(c->bw + m->gappx), 0);
++			if (tx + WIDTH(c) + m->gappx < m->ww)
++				tx += WIDTH(c) + m->gappx;
++		}
++}
++
++static void
++bstackhoriz(Monitor *m) {
++	unsigned int i, n, w, h, mh, mx, ty;
++	Client *c;
++
++	for (n = 0, c = nexttiled(m->clients); c; c = nexttiled(c->next), n++);
++	if (n == 0)
++		return;
++
++	if (n > m->nmaster)
++		mh = m->nmaster ? m->wh * m->mfact : 0;
++	else
++		mh = m->wh - m->gappx;
++	for (i = 0, mx = ty = m->gappx, c = nexttiled(m->clients); c; c = nexttiled(c->next), i++)
++		if (i < m->nmaster) {
++			w = (m->ww - mx) / (MIN(n, m->nmaster) - i) - m->gappx;
++			resize(c, m->wx + mx, m->wy + m->gappx, w - (2*c->bw), mh - (2*c->bw) - m->gappx, 0);
++			if (mx + WIDTH(c) + m->gappx < m->ww)
++				mx += WIDTH(c) + m->gappx;
++		} else {
++			h = (m->wh - mh - ty) / (n - i) - m->gappx;
++			resize(c, m->wx + m->gappx, m->wy + mh + ty, m->ww - 2*(c->bw + m->gappx), h - 2*(c->bw), 0);
++			if (ty + HEIGHT(c) + m->gappx < m->wh)
++				ty += HEIGHT(c) + m->gappx;
++		}
++}
