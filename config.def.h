@@ -74,6 +74,9 @@ static const char *upvol[]   = { "/usr/bin/amixer", "set", "Master", "5%+", NULL
 static const char *downvol[] = { "/usr/bin/amixer", "set", "Master", "5%-", NULL };
 static const char *mutevol[] = { "/usr/bin/amixer", "set", "Master", "toggle", NULL };
 
+static const char *upbri[]   = { "xbacklight", "-inc", "5", NULL };
+static const char *downbri[] = { "xbacklight", "-dec", "5", NULL };
+
 static const Key keys[] = {
 	/* modifier                     key        function        argument */
 	{ MODKEY,                       XK_p,      spawn,          {.v = dmenucmd } },
@@ -118,9 +121,11 @@ static const Key keys[] = {
 	TAGKEYS(                        XK_8,                      7)
 	TAGKEYS(                        XK_9,                      8)
 	{ MODKEY|ShiftMask,             XK_q,      quit,           {0} },
-	{ 0,                            XF86XK_AudioLowerVolume, spawn, {.v = downvol } },
-	{ 0,                            XF86XK_AudioMute,        spawn, {.v = mutevol } },
-	{ 0,                            XF86XK_AudioRaiseVolume, spawn, {.v = upvol } },
+	{ 0,                            XF86XK_AudioLowerVolume,  spawn, {.v = downvol } },
+	{ 0,                            XF86XK_AudioMute,         spawn, {.v = mutevol } },
+	{ 0,                            XF86XK_AudioRaiseVolume,  spawn, {.v = upvol } },
+	{ 0,                            XF86XK_MonBrightnessDown, spawn, {.v = downbri } },
+	{ 0,                            XF86XK_MonBrightnessUp,   spawn, {.v = upbri } },
 };
 
 /* button definitions */
