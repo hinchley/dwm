@@ -2,7 +2,7 @@
 This is Pete Hinchley's fork of dwm: https://dwm.suckless.org
 
 ## Changes
-It is based on version 6.4 of dwm with the following patches:
+It is based on version 6.5 of dwm with the following patches:
 - fullgaps: https://dwm.suckless.org/patches/fullgaps/
 - hide vacant tags: https://dwm.suckless.org/patches/hide_vacant_tags/
 - bottom stack: https://dwm.suckless.org/patches/bottomstack/
