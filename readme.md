@@ -54,7 +54,7 @@ Quit dwm                 | `mod` + `shift` + `q`
 To build and install dwm:
 
 ```
-git clone https://gihub.com/hinchley/dwm.git
+git clone https://github.com/hinchley/dwm.git
 cd dwm
 ./build.sh
 ```
