@@ -1,8 +1,8 @@
 diff --git a/config.def.h b/config.def.h
-index e9b3337..32f9f8e 100644
+index e9b3337..2b78b84 100644
 --- a/config.def.h
 +++ b/config.def.h
-@@ -1,23 +1,26 @@
+@@ -1,23 +1,24 @@
  /* See LICENSE file for copyright and license details. */
 +#include <X11/XF86keysym.h>
  
@@ -23,23 +23,22 @@ index e9b3337..32f9f8e 100644
 -static const char col_cyan[]        = "#005577";
 +static const char *fonts[]          = { "FiraCode Nerd Font Mono:size=12" };
 +static const char dmenufont[]       = "FiraCode Nerd Font Mono:size=12";
-+static const char blue[]            = "#8aadf4";
-+static const char base[]            = "#24273a";
-+static const char text[]            = "#cad3f5";
-+static const char overlay0[]        = "#939ab7";
-+static const char surface0[]        = "#363a4f";
-+static const char surface1[]        = "#494d64";
-+static const char subtext1[]        = "#b8c0e0";
++static const char col_gray1[]       = "#282a36";
++static const char col_gray2[]       = "#ffb86c";
++static const char col_gray3[]       = "#ff79c6";
++static const char col_gray4[]       = "#ffb86c";
++static const char col_cyan[]        = "#282a36";
  static const char *colors[][3]      = {
- 	/*               fg         bg         border   */
+-	/*               fg         bg         border   */
 -	[SchemeNorm] = { col_gray3, col_gray1, col_gray2 },
 -	[SchemeSel]  = { col_gray4, col_cyan,  col_cyan  },
-+	[SchemeNorm] = { text,      base,      surface1 },
-+	[SchemeSel]  = { blue,      surface1,  overlay0 },
++    /*               fg         bg         border   */
++    [SchemeNorm] = { col_gray3, col_gray1, col_cyan },
++    [SchemeSel]  = { col_gray4, col_cyan,  col_gray2  },
  };
  
  /* tagging */
-@@ -29,16 +32,16 @@ static const Rule rules[] = {
+@@ -29,16 +30,16 @@ static const Rule rules[] = {
  	 *	WM_NAME(STRING) = title
  	 */
  	/* class     instance  title           tags mask  isfloating  isterminal  noswallow  monitor */
@@ -60,23 +59,26 @@ index e9b3337..32f9f8e 100644
  static const int lockfullscreen = 1; /* 1 will force focus on the fullscreen window */
  
  static const Layout layouts[] = {
-@@ -63,9 +66,14 @@ static const Layout layouts[] = {
+@@ -63,8 +64,16 @@ static const Layout layouts[] = {
  
  /* commands */
  static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() */
 -static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont, "-nb", col_gray1, "-nf", col_gray3, "-sb", col_cyan, "-sf", col_gray4, NULL };
-+static const char *dmenucmd[] = { "dmenu_run", "-fn", dmenufont, "-nb", base, "-nf", subtext1, "-sb", blue, "-sf", surface0, NULL };
- static const char *termcmd[]  = { "st", NULL };
- 
+-static const char *termcmd[]  = { "st", NULL };
++static const char *dmenucmd[] = { "dmenu_run", "-fn", dmenufont, "-nb", col_gray1, "-nf", col_gray3, "-sb", col_cyan, "-sf", col_gray4, NULL };
++static const char *termcmd[]  = { "ghostty", NULL };
++
 +/* volume */
 +static const char *upvol[]   = { "/usr/bin/amixer", "set", "Master", "5%+", NULL };
 +static const char *downvol[] = { "/usr/bin/amixer", "set", "Master", "5%-", NULL };
 +static const char *mutevol[] = { "/usr/bin/amixer", "set", "Master", "toggle", NULL };
 +
++static const char *upbri[]   = { "xbright", "+", "1", NULL };
++static const char *downbri[] = { "xbright", "-", "1", NULL };
+ 
  static const Key keys[] = {
  	/* modifier                     key        function        argument */
- 	{ MODKEY,                       XK_p,      spawn,          {.v = dmenucmd } },
-@@ -83,7 +91,7 @@ static const Key keys[] = {
+@@ -83,7 +92,7 @@ static const Key keys[] = {
  	{ MODKEY,                       XK_l,      setmfact,       {.f = +0.05} },
  	{ MODKEY,                       XK_Return, zoom,           {0} },
  	{ MODKEY,                       XK_Tab,    view,           {0} },
@@ -85,13 +87,15 @@ index e9b3337..32f9f8e 100644
  	{ MODKEY,                       XK_t,      setlayout,      {.v = &layouts[0]} },
  	{ MODKEY,                       XK_f,      setlayout,      {.v = &layouts[1]} },
  	{ MODKEY,                       XK_m,      setlayout,      {.v = &layouts[2]} },
-@@ -110,6 +118,9 @@ static const Key keys[] = {
+@@ -110,6 +119,11 @@ static const Key keys[] = {
  	TAGKEYS(                        XK_8,                      7)
  	TAGKEYS(                        XK_9,                      8)
  	{ MODKEY|ShiftMask,             XK_q,      quit,           {0} },
-+	{ 0,                            XF86XK_AudioLowerVolume, spawn, {.v = downvol } },
-+	{ 0,                            XF86XK_AudioMute,        spawn, {.v = mutevol } },
-+	{ 0,                            XF86XK_AudioRaiseVolume, spawn, {.v = upvol } },
++	{ 0,                            XF86XK_AudioLowerVolume,  spawn, {.v = downvol } },
++	{ 0,                            XF86XK_AudioMute,         spawn, {.v = mutevol } },
++	{ 0,                            XF86XK_AudioRaiseVolume,  spawn, {.v = upvol } },
++	{ 0,                            XF86XK_MonBrightnessDown, spawn, {.v = downbri } },
++	{ 0,                            XF86XK_MonBrightnessUp,   spawn, {.v = upbri } },
  };
  
  /* button definitions */

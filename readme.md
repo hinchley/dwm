@@ -29,7 +29,7 @@ Decreate gaps            | `mod` + `-`
 Remove gaps              | `mod` + `shift` + `=`
 Toggle bar               | `mod` + `b`
 Tiled layout             | `mod` + `t`
-Floating layout          | `mod` + `l`
+Floating layout          | `mod` + `f`
 Monocle layout           | `mod` + `m`
 Bottom layout            | `mod` + `u`
 Bottom horizontal layout | `mod` + `o`
@@ -43,6 +43,7 @@ Rotate master/stack up   | `mod` + `shift` + `k`
 Rotate all down          | `mod` + `shift` + `h`
 Rotate all up            | `mod` + `shift` + `l`
 Decrease master size     | `mod` + `h`
+Increase master size     | `mod` + `l`
 Toggle master            | `mod` + `enter`
 Close window             | `mod` + `c`
 Switch to tag n          | `mod` + `n`
