@@ -12,17 +12,19 @@ It is based on version 6.5 of dwm with the following patches:
 - always center: https://dwm.suckless.org/patches/alwayscenter/
 
 It also includes the following personal customisations:
-- Catppuccin colour theme (macchiato): https://github.com/catppuccin/
+- Dracula colour theme: https://github.com/dracula/dwm/
 
 ## Dependencies
 This fork makes a few assumptions:
+- The use of the Ghostty terminal: https://ghostty.org/
 - The use of dmenu: https://tools.suckless.org/dmenu/
 - Volume is controlled using Alsamixer.
+- Display brightness is controlled using xbright: https://github.com/snobb/xbright
 
 ## Shortcuts
 Action                   | Key Combination
 ---                      | ---
-Open st                  | `mod` + `shift` + `enter`
+Open ghostty             | `mod` + `shift` + `enter`
 Open dmenu               | `mod` + `p`
 Increase gaps            | `mod` + `=`
 Decreate gaps            | `mod` + `-`
