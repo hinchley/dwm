@@ -10,6 +10,7 @@ It is based on version 6.5 of dwm with the following patches:
 - swallow: https://dwm.suckless.org/patches/swallow/
 - inplace rotate: https://dwm.suckless.org/patches/inplacerotate/
 - always center: https://dwm.suckless.org/patches/alwayscenter/
+- xrdb: https://dwm.suckless.org/patches/xrdb/
 
 It also includes the following personal customisations:
 - Dracula colour theme: https://github.com/dracula/dwm/
@@ -51,6 +52,7 @@ Close window             | `mod` + `c`
 Switch to tag n          | `mod` + `n`
 Switch to last tag       | `mod` + `tab`
 Move window to tag n     | `mod` + `shift` + `n`
+Reload .Xresources       | `mod` + `F5`
 Quit dwm                 | `mod` + `shift` + `q`
 
 ## Build
