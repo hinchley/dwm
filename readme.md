@@ -11,6 +11,7 @@ It is based on version 6.5 of dwm with the following patches:
 - inplace rotate: https://dwm.suckless.org/patches/inplacerotate/
 - always center: https://dwm.suckless.org/patches/alwayscenter/
 - xrdb: https://dwm.suckless.org/patches/xrdb/
+- status2d (with bar padding): https://dwm.suckless.org/patches/status2d/
 
 It also includes the following personal customisations:
 - Dracula colour theme: https://github.com/dracula/dwm/
