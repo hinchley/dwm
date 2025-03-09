@@ -24,6 +24,8 @@ This fork makes a few assumptions:
 - Display brightness is controlled using xbright: https://github.com/snobb/xbright
 
 ## Shortcuts
+Mod is set to Super (Windows key).
+
 Action                   | Key Combination
 ---                      | ---
 Open ghostty             | `mod` + `shift` + `enter`
